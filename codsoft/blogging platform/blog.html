@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Blog Platform</title>
+    <style>
+        /* Basic styling for the blog platform */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .new-post {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+        }
+        .new-post input, .new-post textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .new-post button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+        .new-post button:hover {
+            background-color: #555;
+        }
+        .post {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .post h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+        .post p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .post .date {
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Blog Platform</h1>
+        <div class="new-post">
+            <h2>Create New Post</h2>
+            <input type="text" id="title" placeholder="Post Title">
+            <textarea id="content" placeholder="Write your post here..." rows="5"></textarea>
+            <button onclick="addPost()">Publish Post</button>
+        </div>
+        <div id="posts">
+            <!-- Blog posts will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample posts to display initially
+        const posts = [
+            { title: "My First Blog Post", content: "This is my first post on this blog!", date: new Date().toLocaleDateString() },
+            { title: "Why I Love Coding", content: "Coding allows me to bring ideas to life and solve real-world problems.", date: new Date().toLocaleDateString() }
+        ];
+
+        // Function to render posts
+        function renderPosts() {
+            const postsContainer = document.getElementById("posts");
+            postsContainer.innerHTML = "";
+            posts.forEach((post, index) => {
+                const postElement = document.createElement("div");
+                postElement.classList.add("post");
+                postElement.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <p class="date">Published on ${post.date}</p>
+                    <p>${post.content}</p>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        // Function to add a new post
+        function addPost() {
+            const title = document.getElementById("title").value;
+            const content = document.getElementById("content").value;
+
+            if (title && content) {
+                const newPost = {
+                    title: title,
+                    content: content,
+                    date: new Date().toLocaleDateString()
+                };
+                posts.unshift(newPost); // Add new post to the beginning
+                renderPosts();
+                document.getElementById("title").value = ""; // Clear input fields
+                document.getElementById("content").value = "";
+            } else {
+                alert("Please fill in both the title and content fields!");
+            }
+        }
+
+        // Render initial posts on page load
+        renderPosts();
+    </script>
+</body>
+</html>
